@@ -1,0 +1,31 @@
+ #!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+
+require 'optparse'
+require 'build_tools'
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: run_job_and_wait [options]"
+
+  opts.on('-j', '--job JOB', 'Job to run on Jenkins.') do |job|
+    options[:job] = job
+  end
+
+  opts.on('-p', '--params PARAMS', 'Build parameters to supply to the build job.') do |params|
+    options[:params] = params
+  end
+end.parse!
+
+run_job = BuildTools::Transactions::RunJobAndWait.new
+
+result = run_job.call(job: options[:job], params: options[:params])
+
+if result.success?
+  puts 'Build has completed'
+else
+  puts result.failure
+  exit 1
+end
