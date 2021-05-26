@@ -13,8 +13,8 @@ module BuildTools
         @form_base_url = deps[:form_base_url] || Operations::FormBaseUrl.instance
       end
 
-      def call(job:, env:)
-        base_url = yield @form_base_url.call(job: job, env: env)
+      def call(job)
+        base_url = yield @form_base_url.call(job)
         response = @http.get("#{base_url}/#{TAIL}")
 
         if response.status.success?

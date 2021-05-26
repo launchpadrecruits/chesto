@@ -14,19 +14,9 @@ require 'json'
 module BuildTools
   class Error < StandardError; end
 
-  module Environments
-    DEV = 'dev'.freeze
-
-    ALLOWED = [DEV].freeze
-  end
-
   AUTH = {
     user: ENV['JENKINS_DEPLOY_USER'],
     pass: ENV['JENKINS_DEPLOY_API_KEY']
-  }.freeze
-
-  JOB_PATHS = {
-    Environments::DEV => 'job/launchpadrecruits-main/job/unrestricted/job'
   }.freeze
 
   module Transaction
@@ -67,6 +57,10 @@ module BuildTools
       end
     end
   end
+
+  STRING_PRESENT = lambda do |string|
+    !string.to_s.empty?
+  end.freeze
 end
 
 require_relative 'build_tools/entities/jenkins_build'
@@ -75,4 +69,4 @@ require_relative 'build_tools/transactions/get_last_build'
 
 require_relative 'build_tools/contracts/run_job'
 require_relative 'build_tools/transactions/run_job'
-require_relative 'build_tools/transactions/deploy'
+require_relative 'build_tools/transactions/run_job_and_wait'

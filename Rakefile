@@ -16,10 +16,10 @@ task default: :test
 
 namespace :jenkins do
   desc 'Deploy to Jenkins'
-  task :deploy, [:env,:branch] do |t, args|
-    deploy = BuildTools::Transactions::Deploy.new
+  task :run_job_and_wait, [:job,:params] do |t, args|
+    run_job = BuildTools::Transactions::RunJobAndWait.new
 
-    result = deploy.call(env: args.env, branch: args.branch)
+    result = run_job.call(job: args.job, params: args.params)
 
     if result.success?
       puts result.success

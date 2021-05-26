@@ -8,7 +8,6 @@ module BuildTools
         SUCCESS = 'SUCCESS'
         ABORTED = 'ABORTED'
         FAILURE = 'FAILURE'
-        BLANK = ''
       end
 
       attribute :id, Types::Coercible::Integer
@@ -21,7 +20,7 @@ module BuildTools
       end
 
       def no_longer_running?
-        result != Statuses::BLANK
+        STRING_PRESENT.call(result)
       end
     end
   end

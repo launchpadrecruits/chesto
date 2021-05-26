@@ -16,12 +16,10 @@ module BuildTools
 
       def call(args)
         valid_args = yield @apply_contract.call(args, contract: @contract)
-        base_url = yield @form_base_url.call(
-          job: valid_args[:job],
-          env: valid_args[:env]
-        )
+        base_url = yield @form_base_url.call(valid_args[:job])
 
-        body = transform_params(valid_args[:params])
+        yield validate_if_token_present
+        body = yield transform_params(valid_args[:params])
         response = @http.post("#{base_url}/#{TAIL}", body: body)
 
         if response.status.success?
@@ -33,8 +31,25 @@ module BuildTools
 
       private
 
+      def validate_if_token_present
+        Success(:ok) if STRING_PRESENT.call(ENV['JENKINS_JOB_TOKEN'])
+      end
+
       def transform_params(params)
-        URI.encode_www_form(params)
+        if params.is_a?(Hash)
+          with_token = params.merge(token: ENV['JENKINS_JOB_TOKEN'])
+          uri_encoded = URI.encode_www_form(with_token)
+
+          Success(uri_encoded)
+        elsif params.is_a?(String)
+          with_token = "#{params}&token=#{ENV['JENKINS_JOB_TOKEN']}"
+          normalized = URI.decode_www_form(with_token)
+          uri_encoded = URI.encode_www_form(normalized)
+
+          Success(uri_encoded)
+        else
+          Failure(:invalid_params)
+        end
       end
     end
   end

@@ -5,12 +5,7 @@ module BuildTools
     class RunJob < Contract
       params do
         required(:job).filled(:string)
-        required(:env).filled(:string)
-        required(:params).filled(:hash)
-      end
-
-      rule(:env) do
-        key.failure('must be a known environment') unless Environments::ALLOWED.include?(value)
+        required(:params).filled
       end
     end
   end
