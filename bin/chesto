@@ -8,7 +8,7 @@ require 'chesto'
 options = {}
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: run_job_and_wait [options]"
+  opts.banner = "Usage: chesto [options]"
 
   opts.on('-j', '--job JOB', 'Job to run on Jenkins.') do |job|
     options[:job] = job
@@ -24,8 +24,15 @@ run_job = Chesto::Transactions::RunJobAndWait.new
 result = run_job.call(job: options[:job], params: options[:params])
 
 if result.success?
-  puts 'Build has completed'
+  build = result.success
+  puts "Build id: #{build.id} has completed with status #{build.result}"
 else
-  puts result.failure
+  failed_result = result.failure
+
+  if failed_result.respond_to?(:id)
+    puts "Build id: #{failed_result.id} has failed with status #{failed_result.result}"
+  else
+    puts failed_result
+  end
   exit 1
 end

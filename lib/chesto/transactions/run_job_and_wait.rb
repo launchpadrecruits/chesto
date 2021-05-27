@@ -37,9 +37,9 @@ module Chesto
           end
 
           if current_build.success?
-            Success(:ok)
+            Success(current_build)
           else
-            Failure(current_build.result)
+            Failure(current_build)
           end
         end
       rescue Timeout::Error

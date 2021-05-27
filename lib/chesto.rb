@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "build_tools/version"
+require_relative "chesto/version"
 
 require 'dry/monads/result'
 require 'dry/monads/do'
@@ -63,10 +63,10 @@ module Chesto
   end.freeze
 end
 
-require_relative 'build_tools/entities/jenkins_build'
-require_relative 'build_tools/operations/form_base_url'
-require_relative 'build_tools/transactions/get_last_build'
+require_relative 'chesto/entities/jenkins_build'
+require_relative 'chesto/operations/form_base_url'
+require_relative 'chesto/transactions/get_last_build'
 
-require_relative 'build_tools/contracts/run_job'
-require_relative 'build_tools/transactions/run_job'
-require_relative 'build_tools/transactions/run_job_and_wait'
+require_relative 'chesto/contracts/run_job'
+require_relative 'chesto/transactions/run_job'
+require_relative 'chesto/transactions/run_job_and_wait'
