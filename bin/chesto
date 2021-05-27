@@ -1,6 +1,6 @@
  #!/usr/bin/env ruby
 
-$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 require 'optparse'
 require 'chesto'
@@ -8,7 +8,7 @@ require 'chesto'
 options = {}
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: chesto [options]"
+  opts.banner = 'Usage: chesto [options]'
 
   opts.on('-j', '--job JOB', 'Job to run on Jenkins.') do |job|
     options[:job] = job

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "chesto/version"
+require_relative 'chesto/version'
 
 require 'dry/monads/result'
 require 'dry/monads/do'
