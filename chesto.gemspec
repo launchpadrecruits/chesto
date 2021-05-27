@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'dry-schema', '~> 1.6'
   spec.add_dependency 'dry-types', '~> 1.2'
   spec.add_dependency 'dry-validation', '~> 1.6'
+  spec.add_dependency 'ruby-progressbar', '~> 1.11'
 end

@@ -7,6 +7,7 @@ require 'dry/monads/do'
 require 'dry/types'
 require 'dry/struct'
 require 'dry/validation'
+require 'ruby-progressbar'
 
 require 'http'
 require 'json'

@@ -16,23 +16,28 @@ module Chesto
           end
         end
         @run_job = deps[:run_job] || RunJob.new
+        @progress_bar = deps[:progress_bar] || ProgressBar
       end
 
       def call(job:, params:)
         get_last_build = @build_function.call(job)
         last_build = yield get_last_build.call
+        progress_bar = @progress_bar.create
 
         Timeout::timeout(TIMEOUT_SECONDS) do
           until last_build.no_longer_running? do
             sleep(POLL_INTERVAL)
+            progress_bar.increment
             last_build = yield get_last_build.call
           end
 
           yield @run_job.call(job: job, params: params)
 
           current_build = yield get_last_build.call
+
           until current_build_finished?(current_build, last_build)
             sleep(POLL_INTERVAL)
+            progress_bar.increment
             current_build = yield get_last_build.call
           end
 
