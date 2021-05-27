@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require 'optparse'
-require 'build_tools'
+require 'chesto'
 
 options = {}
 
