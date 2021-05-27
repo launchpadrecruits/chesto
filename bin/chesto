@@ -19,7 +19,7 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-run_job = BuildTools::Transactions::RunJobAndWait.new
+run_job = Chesto::Transactions::RunJobAndWait.new
 
 result = run_job.call(job: options[:job], params: options[:params])
 

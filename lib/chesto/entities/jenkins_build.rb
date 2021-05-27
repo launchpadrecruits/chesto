@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module BuildTools
+module Chesto
   module Entities
     class JenkinsBuild < Struct
 

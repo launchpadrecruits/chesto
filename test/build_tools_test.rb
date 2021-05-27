@@ -2,9 +2,9 @@
 
 require "test_helper"
 
-class BuildToolsTest < Minitest::Test
+class ChestoTest < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::BuildTools::VERSION
+    refute_nil ::Chesto::VERSION
   end
 
   def test_it_does_something_useful

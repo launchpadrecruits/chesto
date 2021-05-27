@@ -4,7 +4,7 @@ require "bundler/gem_tasks"
 require "rake/testtask"
 
 $LOAD_PATH.unshift File.expand_path("./lib", __dir__)
-require 'build_tools'
+require 'chesto'
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -17,14 +17,14 @@ task default: :test
 namespace :jenkins do
   desc 'Deploy to Jenkins'
   task :run_job_and_wait, [:job,:params] do |t, args|
-    run_job = BuildTools::Transactions::RunJobAndWait.new
+    run_job = Chesto::Transactions::RunJobAndWait.new
 
     result = run_job.call(job: args.job, params: args.params)
 
     if result.success?
       puts result.success
     else
-      raise BuildTools::Error.new(result.failure)
+      raise Chesto::Error.new(result.failure)
     end
   end
 end

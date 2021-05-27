@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module BuildTools
+module Chesto
   module Operations
     class FormBaseUrl
       include Operation

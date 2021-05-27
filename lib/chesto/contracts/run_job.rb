@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module BuildTools
+module Chesto
   module Contracts
     class RunJob < Contract
       params do

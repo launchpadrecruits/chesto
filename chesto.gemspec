@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/build_tools/version"
+require_relative "lib/chesto/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "build_tools"
-  spec.version       = BuildTools::VERSION
+  spec.name          = "chesto"
+  spec.version       = Chesto::VERSION
   spec.authors       = ["Santo Puppy"]
   spec.email         = ["lcelestial@outmatch.com"]
 

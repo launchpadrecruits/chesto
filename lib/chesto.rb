@@ -11,7 +11,7 @@ require 'dry/validation'
 require 'http'
 require 'json'
 
-module BuildTools
+module Chesto
   class Error < StandardError; end
 
   AUTH = {
