@@ -19,8 +19,9 @@ module Chesto
         base_url = yield @form_base_url.call(valid_args[:job])
 
         yield validate_if_token_present
-        body = yield transform_params(valid_args[:params])
-        response = @http.post("#{base_url}/#{TAIL}", body: body)
+
+        form_params = yield transform_params(valid_args[:params])
+        response = @http.post("#{base_url}/#{TAIL}", form: form_params)
 
         if response.status.success?
           Success(:ok)
@@ -37,16 +38,10 @@ module Chesto
 
       def transform_params(params)
         if params.is_a?(Hash)
-          with_token = params.merge(token: ENV['JENKINS_JOB_TOKEN'])
-          uri_encoded = URI.encode_www_form(with_token)
+          symbolized = JSON.parse(JSON[params], symbolize_names: true)
+          with_token = symbolized.merge(token: ENV['JENKINS_JOB_TOKEN'])
 
-          Success(uri_encoded)
-        elsif params.is_a?(String)
-          with_token = "#{params}&token=#{ENV['JENKINS_JOB_TOKEN']}"
-          normalized = URI.decode_www_form(with_token)
-          uri_encoded = URI.encode_www_form(normalized)
-
-          Success(uri_encoded)
+          Success(with_token)
         else
           Failure(:invalid_params)
         end
